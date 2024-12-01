@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+
+  main:
+    banner-mode: off
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 12345
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.cache.use_second_level_cache: true
+      caffeine:
+        cache:
+          initialCapacity: 100
+          maximumSize: 1000
+          expireAfterWrite: 600000
+      hibernate.cache.region.factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+#      javax.cache.provider: com.github.ben-manes.caffeine.jcache.spi.CaffeineCachingProvider
+      hibernate.jdbc.time_zone: UTC
+      hibernate.format_sql: true
+    show-sql: true
+
+  liquibase:
+    change-log: classpath:db.changelog/changelog-master.xml
